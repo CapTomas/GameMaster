@@ -34,6 +34,26 @@ socket.addEventListener('close', (event) => {
     logMessage('Connection closed');
 });
 
+function switchMode(mode) {
+    const authButton = document.querySelector('.auth-button');
+    const regButton = document.querySelector('.reg-button');
+    const authSection = document.querySelector('.auth-section');
+    const regSection = document.querySelector('.reg-section');
+
+    if (mode === 'auth') {
+        authSection.style.display = 'block';
+        regSection.style.display = 'none';
+        authButton.style.display = 'none';
+        regButton.style.display = 'block';
+    } else if (mode === 'register') {
+        authSection.style.display = 'none';
+        regSection.style.display = 'block';
+        authButton.style.display = 'block';
+        regButton.style.display = 'none';
+    }
+}
+
+
 function authenticate() {
     let username = document.getElementById('authUsername').value;
     let password = document.getElementById('authPassword').value;

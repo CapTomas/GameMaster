@@ -3,51 +3,72 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSocket Game Client</title>
+    <title>GameMaster Client</title>
 </head>
 
 <body>
-    <h2>WebSocket Game Client</h2>
 
-    <!-- Authentication Section -->
-    <div>
-        <h3>Authenticate</h3>
-        <label for="authUsername">Username:</label>
-        <input type="text" id="authUsername">
-        <label for="authPassword">Password:</label>
-        <input type="password" id="authPassword">
-        <button onclick="authenticate()">Authenticate</button>
+<div class="container">
+    <h2>GameMaster Client</h2>
+
+    <!-- Link to Character Creation -->
+    <div class="neu-card">
+        
+        <a href="creation.html" style="margin:5px 30%; display:flex; align-items:center; justify-content:center;">Create a new D&D character</a>
     </div>
 
-    <!-- Registration Section -->
-    <div>
-        <h3>Register</h3>
-        <label for="regUsername">Username:</label>
-        <input type="text" id="regUsername">
-        <label for="regPassword">Password:</label>
-        <input type="password" id="regPassword">
-        <button onclick="register()">Register</button>
+    <!-- Authentication / Registration section -->
+    <div class="neu-card">
+        <div class="toggle-section"  style="margin: 0 30%; display:flex; align-items:center; justify-content:center;">
+            <button class="toggle-button auth-button" onclick="switchMode('auth')">Login</button>
+            <button class="toggle-button reg-button" style="display: none;" onclick="switchMode('register')">Registration</button>
+        </div>
+        
+        <div class="auth-section" style="display: none;">
+            <h3>Login</h3>
+            <div class="input-group">
+                <label for="authUsername">Username:</label>
+                <input type="text" id="authUsername">
+            </div>
+            <div class="input-group">
+                <label for="authPassword">Password:</label>
+                <input type="password" id="authPassword">
+            </div>
+            <button onclick="authenticate()">Login</button>        
+        </div>
+        
+        <div class="reg-section" style="display: none;">
+            <h3>Registration</h3>
+            <div class="input-group">
+                <label for="regUsername">Username:</label>
+                <input type="text" id="regUsername">
+            </div>
+            <div class="input-group">
+                <label for="regPassword">Password:</label>
+                <input type="password" id="regPassword">
+            </div>
+            <button onclick="register()">Registration</button>        
+        </div>
     </div>
 
     <!-- Chat Interface -->
-    <div>
-        <h3>Chat with the Bot</h3>
-        <div id="chatBox" style="border: 1px solid black; height: 300px; overflow-y: scroll; padding: 10px;"></div>
+    <div class="neu-card">
+        <h3>Chat with the GM</h3>
+        <div id="chatBox" class="chat-box"></div>
         <input type="text" id="chatInput" placeholder="Type your message...">
         <button onclick="sendMessageToBot()">Send</button>
     </div>
 
     <!-- Log Section -->
-    <div>
+    <div class="neu-card">
         <h3>Logs</h3>
         <textarea id="log" rows="10" cols="50" readonly></textarea>
     </div>
-    
-    <!-- Link to Character Creation -->
-    <a href="creation.html">Create a new D&D character</a>
+</div>
 
-    <script src="js/client.js"></script>
+<script src="js/client.js"></script>
 </body>
 
 </html>
