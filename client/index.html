@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Game Client</title>
+</head>
+
+<body>
+    <h2>WebSocket Game Client</h2>
+
+    <!-- Authentication Section -->
+    <div>
+        <h3>Authenticate</h3>
+        <label for="authUsername">Username:</label>
+        <input type="text" id="authUsername">
+        <label for="authPassword">Password:</label>
+        <input type="password" id="authPassword">
+        <button onclick="authenticate()">Authenticate</button>
+    </div>
+
+    <!-- Registration Section -->
+    <div>
+        <h3>Register</h3>
+        <label for="regUsername">Username:</label>
+        <input type="text" id="regUsername">
+        <label for="regPassword">Password:</label>
+        <input type="password" id="regPassword">
+        <button onclick="register()">Register</button>
+    </div>
+
+    <!-- Chat Interface -->
+    <div>
+        <h3>Chat with the Bot</h3>
+        <div id="chatBox" style="border: 1px solid black; height: 300px; overflow-y: scroll; padding: 10px;"></div>
+        <input type="text" id="chatInput" placeholder="Type your message...">
+        <button onclick="sendMessageToBot()">Send</button>
+    </div>
+
+    <!-- Log Section -->
+    <div>
+        <h3>Logs</h3>
+        <textarea id="log" rows="10" cols="50" readonly></textarea>
+    </div>
+    
+    <!-- Link to Character Creation -->
+    <a href="creation.html">Create a new D&D character</a>
+
+    <script src="js/client.js"></script>
+</body>
+
+</html>
