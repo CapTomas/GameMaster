@@ -14,7 +14,7 @@ def initialize_database():
     cur = connection.cursor()
 
     # Check if the REALM table already exists in the database
-    table_exists = cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='REALM'").fetchone()
+    table_exists = cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='REALMS'").fetchone()
     if not table_exists:
         logging.info("----- Initializing static database -----\n")
         _create_tables(cur)

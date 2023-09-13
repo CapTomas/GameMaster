@@ -5,7 +5,7 @@ import logging
 import json
 
 # Configuration and Constants
-MAX_RETRIES = 3 # Maximum number of retries for OpenAI API calls
+MAX_RETRIES = 1 # Maximum number of retries for OpenAI API calls
 _prompt_cache = {} # Cache for prompt templates
 
 def load_openai_api_key(config_path='config.ini'):
@@ -78,6 +78,7 @@ def call_openai(prompt, max_tokens=256, temp=0.7):
     retry_delay = 0.5  # Initial retry delay in seconds
 
     while response is None and retry_count < MAX_RETRIES:
+        print ("----------------------------------------------------------------------------- I am here")
         try:
             completion = openai.ChatCompletion.create(
                 model="gpt-4",
@@ -86,12 +87,14 @@ def call_openai(prompt, max_tokens=256, temp=0.7):
                     {"role": "system", "content": prompt}
                 ]
             )
+            print ("----------------------------------------------------------------------------- I am here2")
             response = completion["choices"][0].message.content.strip()
-            tokens = completion['usage']['total_tokens']
-            if not is_valid_json(response):
-                logging.error("Error: The response is not a valid JSON format.")
-                response = None
+            print ("Response start\n" + response + "end\n")
+            # if not is_valid_json(response):
+            #     logging.error("Error: The response is not a valid JSON format.")
+            #     response = None
         except Exception as err:
+            print ("----------------------------------------------------------------------------- I am here3")
             logging.error(f"Error: {err}")
     
         if response is None:
@@ -101,8 +104,6 @@ def call_openai(prompt, max_tokens=256, temp=0.7):
     if response is None:
         logging.error("Error: Max retries reached. Unable to get response.")
         return '{"error": "Unable to get a valid response."}'
-
-    logging.debug(f"\nUsage: {tokens}")
     return response
 
 def is_valid_json(s):
@@ -120,3 +121,15 @@ def is_valid_json(s):
         return True
     except json.JSONDecodeError:
         return False
+    
+
+def handle_json(response_string):
+    """
+    Handle the OpenAI response string to make it a valid JSON string.
+
+    :param response_string: The raw OpenAI response string
+    :return: The parsed JSON as a Python dictionary
+    """
+    response_string = response_string.replace("\n", "\\n")
+    response_string = response_string.replace('": "', '": \\"').replace('...",', '\\"...,')
+    return json.loads(response_string)

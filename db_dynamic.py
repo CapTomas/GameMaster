@@ -69,9 +69,9 @@ def get_user_by_username(username):
 
 
 def add_user(username, password, salt):
-    db_utils.execute(connection, "INSERT INTO USERS (username, passwd, salt, admin) VALUES (?, ?, ?, FALSE)", username, password, salt)
+    db_utils.execute(connection, "INSERT INTO USERS (username, passwd, salt, admin) VALUES (?, ?, ?, FALSE)", (username, password, salt))
     user_id = db_utils.fetch_one(connection, "SELECT last_insert_rowid()")[0]
-    db_utils.execute(connection, "INSERT INTO USER_INFO (user_id) VALUES (?)", user_id)
+    db_utils.execute(connection, "INSERT INTO USER_INFO (user_id) VALUES (?)", (user_id,))
     return user_id
 
 def get_current_setting(user_id):

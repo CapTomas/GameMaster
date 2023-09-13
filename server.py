@@ -13,10 +13,10 @@ import characters
 import players
 
 # Constants to represent various message codes.
-GM = "GM"
+GM = "GameMaster bot is here for you bro. \n Login or register just above me first."
 UNKNOWN = "UNKNOWN"
 CHALLENGE = "CHALLENGE:"
-SUCCESS = "SUCCESS"
+SUCCESS = "REGISTRATION SUCCESS"
 EXISTING_USER = "EXISTINGUSER"
 
 class WebSocketServer:
@@ -31,8 +31,12 @@ class WebSocketServer:
 
     async def _send_and_receive(self, websocket, message):
         """Send a message to the client and wait for a response."""
+        logging.info("Sending message...")
         await websocket.send(message)
-        return await websocket.recv()
+        logging.info("Message sent. Waiting for response...")
+        response = await websocket.recv()
+        logging.info(f"Received response: {response}")
+        return response
 
     async def _challenge_user(self, websocket, user):
         """
@@ -60,8 +64,13 @@ class WebSocketServer:
 
     async def _register_new_user(self, websocket, username, salt):
         """Register a new user and generate an initial character for them."""
-        password = await websocket.recv()
-        user_id = self.data.add_user(username, password, salt)
+        
+        # Send the salted challenge to the client and await the client's hashed password response.
+        await websocket.send(f"{CHALLENGE}{salt}")
+        hashed_password = await websocket.recv()
+        
+        # Add user with hashed password.
+        user_id = self.data.add_user(username, hashed_password, salt)
         character_id = characters.generate_character('novice', user_id)
         players.set_websocket(user_id, websocket)
         await websocket.send(SUCCESS)
@@ -75,8 +84,9 @@ class WebSocketServer:
         if user:
             await websocket.send(EXISTING_USER)
             return None
+        
+        # Generate salt for new user registration.
         salt = bcrypt.gensalt().decode()
-        await websocket.send(f"{CHALLENGE}{salt}")
         return await self._register_new_user(websocket, username, salt)
 
     async def handle_player(self, websocket, _):
@@ -89,9 +99,10 @@ class WebSocketServer:
                     await self._handle_authentication(websocket, response)
                 elif response.startswith("REGISTER:"):
                     await self._handle_registration(websocket, response)
+        except websockets.ConnectionClosed:
+            logging.warning("WebSocket connection closed by the client.")
         except Exception as e:
             logging.error(f"Error handling connection: {str(e)}")
-            # Consider adding cleanup or disconnecting the websocket.
 
     async def listen(self, url="localhost", port=9289, secure=False):
         """Start the WebSocket server. Can be set to secure (SSL/TLS) mode."""

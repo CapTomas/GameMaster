@@ -33,11 +33,10 @@ async def welcome(user_id, character_id, realm_id = 1):
     websocket = websockets[user_id]
     character = data.get_character(character_id, True)
     realm = db_static.get_realm()
-
-    prompt = generate_prompt("interactions/introduce_realm", (realm[0], realm[1], realm[2], ))
-    introduction = call_openai(prompt, 512)
-    await websocket.send("NARRATION:" + introduction.replace('\n', '\n\n'))
-    
+    prompt = generate_prompt("introduction/introduce_realm")
+    introduction = call_openai(prompt, 256)
+    await websocket.send("NARRATION: " + introduction.replace('\n', '\n\n'))
+    exit()
     prompt = generate_prompt("interactions/introduce_player_character", (character[0], character[2] ))
     introduction = call_openai(prompt, 512)
     await websocket.send("NARRATION:" + introduction.replace('\n', '\n\n'))

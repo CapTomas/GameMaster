@@ -5,13 +5,11 @@ socket.addEventListener('open', (event) => {
     logMessage('Connected to game server');
 });
 
-socket.addEventListener('message', (event) => {
+socket.addEventListener('message', async (event) => {
     logMessage(`Received: ${event.data}`);
     
-    // Handle chat messages. You can check if the message has a specific prefix or structure, 
-    // or if it doesn't match any command pattern, treat it as a chat message.
+    // Handle chat messages.
     if (!event.data.startsWith("CHALLENGE:") && !event.data.startsWith("AUTH:") && !event.data.startsWith("REGISTER:")) {
-        // Assume this is a chat message and display it
         let chatBox = document.getElementById('chatBox');
         chatBox.innerHTML += '<div style="text-align: left; color: green;">' + event.data + '</div>';
         return;
@@ -20,9 +18,9 @@ socket.addEventListener('message', (event) => {
     // Handle challenge
     if (event.data.startsWith("CHALLENGE:")) {
         const salt = event.data.replace("CHALLENGE:", "");
-        // You'd typically hash your password using the salt here. 
-        // For simplicity, we're just sending the salt back as a placeholder.
-        socket.send(salt);
+        let password = document.getElementById('regPassword').value;
+        let hashedPassword = await hashPassword(password, salt);
+        socket.send(hashedPassword);
     }
 });
 
@@ -33,6 +31,16 @@ socket.addEventListener('error', (event) => {
 socket.addEventListener('close', (event) => {
     logMessage('Connection closed');
 });
+
+async function hashPassword(password, salt) {
+    const textEncoder = new TextEncoder();
+    const passwordUint8 = textEncoder.encode(password);
+    const saltUint8 = textEncoder.encode(salt);
+    const combined = new Uint8Array([...passwordUint8, ...saltUint8]);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', combined);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
 
 function switchMode(mode) {
     const authButton = document.querySelector('.auth-button');
@@ -53,7 +61,6 @@ function switchMode(mode) {
     }
 }
 
-
 function authenticate() {
     let username = document.getElementById('authUsername').value;
     let password = document.getElementById('authPassword').value;
@@ -62,11 +69,10 @@ function authenticate() {
 }
 
 function register() {    
-    let username = document.getElementById('regUsername').value; // Corrected the element id here
-    let password = document.getElementById('regPassword').value; // This password is not used yet
-
+    let username = document.getElementById('regUsername').value;
     socket.send(`REGISTER:${username}`);
 }
+
 function logMessage(message) {
     logElem.value += `${message}\n`;
 }
@@ -79,7 +85,7 @@ function sendMessageToBot() {
 
     // Append the user's message to chatBox
     let chatBox = document.getElementById('chatBox');
-    chatBox.innerHTML += '<div style="text-align: right; color: #333;">' + message + '</div>';
+    chatBox.innerHTML += '<div style="text-align: right; color: blue;">' + message + '</div>';
     
     // Clear the chat input field
     document.getElementById('chatInput').value = '';

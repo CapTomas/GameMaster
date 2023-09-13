@@ -82,7 +82,8 @@ input:focus, textarea:focus {
 }
 
 .chat-box {
-    min-height: 200px;
+    min-height: 300px;
+    font-size: small;
     background: #e0e0e0;
     border-radius: 12px;
     padding: 10px;
