@@ -65,7 +65,7 @@ def get_user(user_id):
 
 
 def get_user_by_username(username):
-    return db_utils.fetch_one(connection, "SELECT rowid, username, passwd, salt FROM USERS WHERE username = ?", username)
+    return db_utils.fetch_one(connection, "SELECT rowid, username, passwd, salt FROM USERS WHERE username = ?", (username,))
 
 
 def add_user(username, password, salt):

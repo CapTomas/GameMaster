@@ -1,5 +1,6 @@
 const logElem = document.getElementById("log");
 const socket = new WebSocket('ws://localhost:9289');
+let currentAction = '';
 
 socket.addEventListener('open', (event) => {
     logMessage('Connected to game server');
@@ -7,22 +8,36 @@ socket.addEventListener('open', (event) => {
 
 socket.addEventListener('message', async (event) => {
     logMessage(`Received: ${event.data}`);
-    
+
     // Handle chat messages.
     if (!event.data.startsWith("CHALLENGE:") && !event.data.startsWith("AUTH:") && !event.data.startsWith("REGISTER:")) {
         let chatBox = document.getElementById('chatBox');
         chatBox.innerHTML += '<div style="text-align: left; color: green;">' + event.data + '</div>';
         return;
     }
-    
+
+    logMessage(`I am here: ${event.data}`);
+    if (event.data.startsWith("LOGIN SUCCESS") || event.data.startsWith("REGISTRATION SUCCESS")) {
+        const authSection = document.querySelector('.auth-section');
+        const regSection = document.querySelector('.reg-section');
+        
+        logMessage("Handling success message.");  // Debugging line
+        
+        authSection.style.display = 'none';
+        regSection.style.display = 'none';
+        return; // Exit early since the message was processed
+    }
+
     // Handle challenge
     if (event.data.startsWith("CHALLENGE:")) {
         const salt = event.data.replace("CHALLENGE:", "");
-        let password = document.getElementById('regPassword').value;
+        let passwordInputId = (currentAction === 'auth') ? 'authPassword' : 'regPassword';
+        let password = document.getElementById(passwordInputId).value;
         let hashedPassword = await hashPassword(password, salt);
         socket.send(hashedPassword);
     }
 });
+
 
 socket.addEventListener('error', (event) => {
     logMessage('Error: ' + event);
@@ -63,13 +78,13 @@ function switchMode(mode) {
 
 function authenticate() {
     let username = document.getElementById('authUsername').value;
-    let password = document.getElementById('authPassword').value;
-
+    currentAction = 'auth';
     socket.send(`AUTH:${username}`);
 }
 
 function register() {    
     let username = document.getElementById('regUsername').value;
+    currentAction = 'register';
     socket.send(`REGISTER:${username}`);
 }
 

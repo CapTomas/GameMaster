@@ -16,7 +16,8 @@ import players
 GM = "GameMaster bot is here for you bro. \n Login or register just above me first."
 UNKNOWN = "UNKNOWN"
 CHALLENGE = "CHALLENGE:"
-SUCCESS = "REGISTRATION SUCCESS"
+REGSUCCESS = "REGISTRATION SUCCESS"
+LOGSUCCESS = "LOGIN SUCCESS"
 EXISTING_USER = "EXISTINGUSER"
 
 class WebSocketServer:
@@ -46,7 +47,7 @@ class WebSocketServer:
         await websocket.send(f"{CHALLENGE}{user[3]}")
         response = await websocket.recv()
         if response and response == user[2]:
-            await websocket.send(SUCCESS)
+            await websocket.send(LOGSUCCESS)
             players.set_websocket(user[0], websocket)
             await players.load(user[0])
             return user
@@ -73,7 +74,7 @@ class WebSocketServer:
         user_id = self.data.add_user(username, hashed_password, salt)
         character_id = characters.generate_character('novice', user_id)
         players.set_websocket(user_id, websocket)
-        await websocket.send(SUCCESS)
+        await websocket.send(REGSUCCESS)
         await players.welcome(user_id, character_id)
         return user_id
 

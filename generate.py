@@ -78,7 +78,6 @@ def call_openai(prompt, max_tokens=256, temp=0.7):
     retry_delay = 0.5  # Initial retry delay in seconds
 
     while response is None and retry_count < MAX_RETRIES:
-        print ("----------------------------------------------------------------------------- I am here")
         try:
             completion = openai.ChatCompletion.create(
                 model="gpt-4",
@@ -87,14 +86,11 @@ def call_openai(prompt, max_tokens=256, temp=0.7):
                     {"role": "system", "content": prompt}
                 ]
             )
-            print ("----------------------------------------------------------------------------- I am here2")
             response = completion["choices"][0].message.content.strip()
-            print ("Response start\n" + response + "end\n")
             # if not is_valid_json(response):
             #     logging.error("Error: The response is not a valid JSON format.")
             #     response = None
         except Exception as err:
-            print ("----------------------------------------------------------------------------- I am here3")
             logging.error(f"Error: {err}")
     
         if response is None:
