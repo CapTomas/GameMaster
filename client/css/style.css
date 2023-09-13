@@ -26,12 +26,12 @@ h2, h3 {
     border-radius: 20px;
     padding: 20px;
     margin: 20px 0;
-    box-shadow: -8px -8px 16px #d1d1d1, 8px 8px 16px #f1f1f1;
+    box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #f1f1f1;
     transition: all 0.3s ease;
 }
 
 .neu-card:hover {
-    box-shadow: -4px -4px 8px #d1d1d1, 4px 4px 8px #f1f1f1;
+    box-shadow: 4px 4px 8px #d1d1d1, -4px -4px 8px #f1f1f1;
 }
 
 a, button {
@@ -63,13 +63,13 @@ input, textarea {
     border-radius: 12px;
     background: #e0e0e0;
     margin-bottom: 10px; /* Added spacing between input and the button */
-    box-shadow: inset -4px -4px 8px #d1d1d1, inset 4px 4px 8px #f1f1f1;
+    box-shadow: inset 4px 4px 8px #d1d1d1, inset -4px -4px 8px #f1f1f1;
     outline: none;
     transition: all 0.3s ease;
 }
 
 input:focus, textarea:focus {
-    box-shadow: inset -2px -2px 4px #d1d1d1, inset 2px 2px 4px #f1f1f1;
+    box-shadow: inset 2px 2px 4px #d1d1d1, inset -2px -2px 4px #f1f1f1;
 }
 
 .input-group {
@@ -86,7 +86,7 @@ input:focus, textarea:focus {
     background: #e0e0e0;
     border-radius: 12px;
     padding: 10px;
-    box-shadow: inset -4px -4px 8px #d1d1d1, inset 4px 4px 8px #f1f1f1;
+    box-shadow: inset 4px 4px 8px #d1d1d1, inset -4px -4px 8px #f1f1f1;
     margin-bottom: 15px;
 }
 
@@ -100,7 +100,7 @@ select {
     border-radius: 12px;
     background: #e0e0e0;
     appearance: none; /* Removes the default appearance for consistency across browsers */
-    box-shadow: inset -4px -4px 8px #d1d1d1, inset 4px 4px 8px #f1f1f1;
+    box-shadow: inset 4px 4px 8px #d1d1d1, inset -4px -4px 8px #f1f1f1;
     outline: none;
     transition: all 0.3s ease;
     font-family: 'Poppins', sans-serif;
@@ -109,7 +109,7 @@ select {
 }
 
 select:focus {
-    box-shadow: inset -2px -2px 4px #d1d1d1, inset 2px 2px 4px #f1f1f1;
+    box-shadow: inset 2px 2px 4px #d1d1d1, inset -2px -2px 4px #f1f1f1;
 }
 
 /* To handle hover effect for the back link */
