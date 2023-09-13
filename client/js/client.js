@@ -79,7 +79,7 @@ function sendMessageToBot() {
 
     // Append the user's message to chatBox
     let chatBox = document.getElementById('chatBox');
-    chatBox.innerHTML += '<div style="text-align: right; color: blue;">' + message + '</div>';
+    chatBox.innerHTML += '<div style="text-align: right; color: #333;">' + message + '</div>';
     
     // Clear the chat input field
     document.getElementById('chatInput').value = '';

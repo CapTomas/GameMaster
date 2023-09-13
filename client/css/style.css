@@ -25,7 +25,7 @@ h2, h3 {
     background: #e0e0e0;
     border-radius: 20px;
     padding: 20px;
-    margin: 10px 0;
+    margin: 20px 0;
     box-shadow: -8px -8px 16px #d1d1d1, 8px 8px 16px #f1f1f1;
     transition: all 0.3s ease;
 }
@@ -57,7 +57,7 @@ a:hover, button:hover {
 }
 
 input, textarea {
-    width: 98%;
+    width: 97%;
     padding: 10px;
     border: none;
     border-radius: 12px;
@@ -88,4 +88,41 @@ input:focus, textarea:focus {
     padding: 10px;
     box-shadow: inset -4px -4px 8px #d1d1d1, inset 4px 4px 8px #f1f1f1;
     margin-bottom: 15px;
+}
+
+/* ... [previous styles] ... */
+
+/* For the dropdowns */
+select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    background: #e0e0e0;
+    appearance: none; /* Removes the default appearance for consistency across browsers */
+    box-shadow: inset -4px -4px 8px #d1d1d1, inset 4px 4px 8px #f1f1f1;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    cursor: pointer;
+}
+
+select:focus {
+    box-shadow: inset -2px -2px 4px #d1d1d1, inset 2px 2px 4px #f1f1f1;
+}
+
+/* To handle hover effect for the back link */
+a.back-link:hover {
+    color: #555;
+}
+
+/* Handle the arrow of dropdown for a more modern appearance (this is optional) */
+select::-ms-expand {
+    display: none;
+}
+
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
 }
