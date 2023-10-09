@@ -2,7 +2,10 @@ from generate import generate_prompt
 from generate import call_openai
 from random import randint
 import db_static
+from time import sleep
 import logging
+import concurrent.futures
+from eleven_labs import generate_audio
 
 skill = "novice"
 # Difficulty will be set by the players in the future, and will range between novice, casual, standard, advanced, hardcore.
@@ -34,7 +37,14 @@ async def welcome(user_id, character_id):
     character = data.get_character(character_id, True)
     prompt = generate_prompt("introduction/introduce_realm")
     introduction = call_openai(prompt, 256)
+    executor = concurrent.futures.ThreadPoolExecutor()
+    executor.submit(generate_audio, introduction.replace('\n', '\n\n'))
+    # Shutdown the executor without waiting for tasks to complete.
+    executor.shutdown(wait=False)
+    sleep(3)
     await websocket.send("NARRATION: " + introduction.replace('\n', '\n\n'))
+
+    # You can retrieve the result later with future.result() if needed
     # prompt = generate_prompt("interactions/introduce_player_character", (character[0], character[2] ))
     # introduction = call_openai(prompt, 512)
     # await websocket.send("NARRATION:" + introduction.replace('\n', '\n\n'))

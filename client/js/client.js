@@ -105,3 +105,46 @@ function sendMessageToBot() {
     // Clear the chat input field
     document.getElementById('chatInput').value = '';
 }
+
+let rec;
+let audioStream;
+let isRecording = false;
+
+function toggleRecording() {
+    console.log("toggleRecording called");  // Debugging line to ensure the function is called on button press
+
+    const recordButton = document.getElementById('recordButton');
+    
+    if (isRecording) {
+        stopRecording();
+        recordButton.innerHTML = '<i class="fas fa-microphone"></i>';
+        recordButton.classList.remove('recording');
+    } else {
+        startRecording();
+        recordButton.innerHTML = '<i class="fas fa-stop"></i>';
+        recordButton.classList.add('recording');
+    }
+}
+
+function startRecording() {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
+        audioStream = stream;
+        rec = new Recorder(stream);
+        rec.start();
+        isRecording = true;
+    }).catch(function(err) {
+        console.error('Error accessing the microphone.', err);
+    });
+}
+
+function stopRecording() {
+    rec.stop().then(function(blob) {
+        // Handle the audio blob...
+
+        // Stop the stream
+        audioStream.getTracks().forEach(track => track.stop());
+    }).finally(() => {
+        isRecording = false;  // Moved inside a finally block to ensure it always runs
+    });
+}
+

@@ -127,3 +127,28 @@ select:-moz-focusring {
     color: transparent;
     text-shadow: 0 0 0 #000;
 }
+
+#recordButton {
+    background-color: #e0e0e0;
+    margin-left: 10px;
+    border-radius: 12px; /* Matched with other buttons */
+    width: auto; /* No fixed width */
+    padding: 10px 20px; /* Matched with other buttons */
+    box-shadow: 4px 4px 8px #d1d1d1, -4px -4px 8px #f1f1f1;
+    transition: all 0.3s ease;
+    border: none;
+    outline: none;
+}
+
+#recordButton.recording {
+    background-color: #d8d8d8;
+    box-shadow: inset 1px 1px 2px #d1d1d1, inset -1px -1px 2px #f1f1f1; /* Slightly more subtle inset for the pressed look */
+}
+
+#recordButton i {
+    transition: all 0.3s ease;
+}
+
+#recordButton:hover {
+    box-shadow: inset 1px 1px 2px #d1d1d1, inset -1px -1px 2px #f1f1f1;
+}

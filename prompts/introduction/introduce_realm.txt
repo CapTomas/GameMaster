@@ -20,6 +20,6 @@ Half-Orcs: Allies: Orcs, Humans.
 
 Yet, Dyssomnia isn't solely about its races. Old ruins scattered across the realm whisper tales of ancient civilizations. Vast mountains hold dormant secrets, awaiting discovery. Luminous rivers flow with stories of old, where once, battles were waged upon their banks, reshaping the very fabric of Dyssomnia. The ever-present tension between races has shaped the realm's history, and the looming presence of monsters ensures that the present is just as volatile. Every footstep in Dyssomnia could be a step into legend, every decision a pivot for its future.
 
-Create a verbose very creative introduction to the realm as a narator. Write it in a way of story, but not too long. Remember this world is not some happy place. Dont make it longer then 600 characters.
+Create a verbose very creative introduction to the realm as a narator. Write it in a way of story, but not too long. Remember this world is not some happy place. Dont make it longer then 400 characters.
 
 Respond:

@@ -10,7 +10,7 @@ def inject_data(_data):
 
 
 def generate_character(level, user_id = None):
-    logging.info("----- Generating Character -----")
+    logging.info("----- Generating Realm -----")
     realm = db_static.get_realm()
     cnt = 0
 

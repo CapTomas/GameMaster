@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameMaster Client</title>
 </head>
@@ -53,6 +54,7 @@
         <div id="chatBox" class="chat-box"></div>
         <input type="text" id="chatInput" placeholder="Type your message...">
         <button onclick="sendMessageToBot()">Send</button>
+        <button id="recordButton" onclick="toggleRecording()"><i class="fas fa-microphone"></i></button>
     </div>
 
     <!-- Link to Character Creation -->
@@ -70,6 +72,7 @@
 </div>
 
 <script src="js/client.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/recorderjs/0.1.0/recorder.min.js"></script>
 </body>
 
 </html>
