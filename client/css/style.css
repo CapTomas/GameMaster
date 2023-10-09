@@ -52,6 +52,11 @@ a:hover, button:hover {
     box-shadow: inset 1px 1px 2px #d1d1d1, inset -1px -1px 2px #f1f1f1;
 }
 
+button.pressed-effect {
+    box-shadow: inset 1px 1px 2px #d1d1d1, inset -1px -1px 2px #f1f1f1;
+}
+
+
 .toggle-button {
     margin: 0 5px;
 }
@@ -82,16 +87,37 @@ input:focus, textarea:focus {
 }
 
 .chat-box {
-    min-height: 300px;
+    height: 300px;
     font-size: small;
     background: #e0e0e0;
     border-radius: 12px;
     padding: 10px;
     box-shadow: inset 4px 4px 8px #d1d1d1, inset -4px -4px 8px #f1f1f1;
     margin-bottom: 15px;
+    overflow-y: auto;
 }
 
-/* ... [previous styles] ... */
+/* Scrollbar styles */
+.chat-box::-webkit-scrollbar {
+    width: 12px; /* Adjust width of the scrollbar */
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 5px #d1d1d1, inset -2px -2px 5px #f1f1f1;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background: #dbdbdb;
+    border-radius: 10px;
+    box-shadow: 4px 4px 8px #d1d1d1, -4px -4px 8px #f1f1f1;
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+    background: #dbdbdb;
+    box-shadow: inset 1px 1px 2px #d1d1d1, inset -1px -1px 2px #f1f1f1;
+}
 
 /* For the dropdowns */
 select {

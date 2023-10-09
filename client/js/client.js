@@ -9,10 +9,8 @@ socket.addEventListener('open', (event) => {
 socket.addEventListener('message', async (event) => {
     logMessage(`Received: ${event.data}`);
 
-    // Handle chat messages.
     if (!event.data.startsWith("CHALLENGE:") && !event.data.startsWith("AUTH:") && !event.data.startsWith("REGISTER:")) {
-        let chatBox = document.getElementById('chatBox');
-        chatBox.innerHTML += '<div style="text-align: left; color: green;">' + event.data + '</div>';
+        appendChatMessage(event.data);  // Using the above function
         return;
     }
 
@@ -37,6 +35,7 @@ socket.addEventListener('message', async (event) => {
         socket.send(hashedPassword);
     }
 });
+
 
 
 socket.addEventListener('error', (event) => {
@@ -93,15 +92,11 @@ function logMessage(message) {
 }
 function sendMessageToBot() {
     let message = document.getElementById('chatInput').value;
-    
-    // You can use a prefix to distinguish chat messages from other commands or send the message directly. 
-    // Here we are just sending the chat message as is.
     socket.send(message); 
 
     // Append the user's message to chatBox
     let chatBox = document.getElementById('chatBox');
-    chatBox.innerHTML += '<div style="text-align: right; color: blue;">' + message + '</div>';
-    
+    appendChatMessage(message, 'right', 'blue');     
     // Clear the chat input field
     document.getElementById('chatInput').value = '';
 }
@@ -148,3 +143,27 @@ function stopRecording() {
     });
 }
 
+
+
+document.getElementById('chatInput').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();  // prevents the default Enter key action
+        
+        sendMessageToBot();
+
+        // Add hover effect
+        const sendButton = document.getElementById('sendButton');  // Assuming you've given your Send button the ID "sendButton"
+        sendButton.classList.add('pressed-effect');
+
+        // Remove the effect after 1 second
+        setTimeout(() => {
+            sendButton.classList.remove('pressed-effect');
+        }, 250);
+    }
+});
+
+function appendChatMessage(message, alignment = 'left', color = 'green') {
+    let chatBox = document.getElementById('chatBox');
+    chatBox.innerHTML += `<div style="text-align: ${alignment}; color: ${color};">${message}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
